@@ -19,3 +19,6 @@ jobs:
         run: mvn package
       - name: Run docker compose
         run: docker compose up --abort-on-container-exit
+      - name: Show app output
+        if: always()
+        run: docker compose logs app --no-log-prefix | tail -n 9 | while IFS= read -r line; do echo "::notice title=App output::$line"; done
